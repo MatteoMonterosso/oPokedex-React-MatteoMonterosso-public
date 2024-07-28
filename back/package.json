@@ -7,8 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "db:create": "psql -U opokedex -d opokedex -f data/create_tables.sql",
+    "db:createR": "PGPASSWORD=wNHWcLWEfzmNo1syVIuxM1DpL5OjvmxW psql -h dpg-cqjavf2j1k6c739pssk0-a.oregon-postgres.render.com -U opokedex_mmo_bdd_user -d opokedex_mmo_bdd -f data/create_tables.sql",
     "db:populate": "psql -U opokedex -d opokedex -f data/seeding_tables.sql",
-    "db:reset": "npm run db:create && npm run db:populate"
+    "db:populateR": "PGPASSWORD=wNHWcLWEfzmNo1syVIuxM1DpL5OjvmxW psql -h dpg-cqjavf2j1k6c739pssk0-a.oregon-postgres.render.com -U opokedex_mmo_bdd_user -d opokedex_mmo_bdd -f data/seeding_tables.sql",
+    "db:reset": "npm run db:create && npm run db:populate",
+    "db:resetR": "npm run db:createR && npm run db:populateR"
   },
   "keywords": [],
   "author": "",

@@ -17,7 +17,7 @@ import { ITeam } from '../../@types/team';
 import * as bulmaToast from 'bulma-toast';
 // import './App.css';
 
-const BackURL = 'http://localhost:3000';
+const BackURL = 'https://back-opokedex-react-matteomonterosso.onrender.com';
 
 function App() {
   // STATE pour le pseudo

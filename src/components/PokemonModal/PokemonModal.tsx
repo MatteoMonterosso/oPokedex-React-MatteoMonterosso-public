@@ -12,15 +12,14 @@ interface PokemonModalProps {
 }
 
 function PokemonModal({ pkmModalData, setPkmModalData }: PokemonModalProps) {
-  const { pkms, teams, setTeams, token, expiredTokenProtocol } = useContext(
-    Context
-  ) as IContext;
+  const { pkms, teams, setTeams, token, expiredTokenProtocol, BackURL } =
+    useContext(Context) as IContext;
 
   const addPkmToTeam = async (teamId: number, pkmId: number) => {
     try {
       console.log(token);
       const response = await axios.put(
-        `http://localhost:3000/api/teams/${teamId}/pokemons/${pkmId}`,
+        `${BackURL}/api/teams/${teamId}/pokemons/${pkmId}`,
         {},
         {
           headers: {

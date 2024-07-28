@@ -11,16 +11,15 @@ interface TeamModalProps {
 }
 
 function TeamModal({ teamModalData, setTeamModalData }: TeamModalProps) {
-  const { pkms, teams, setTeams, expiredTokenProtocol, token } = useContext(
-    Context
-  ) as IContext;
+  const { pkms, teams, setTeams, expiredTokenProtocol, token, BackURL } =
+    useContext(Context) as IContext;
 
   const [inputValue, setInputValue] = useState('');
 
   const deletePkmFromTable = async (teamId: number, pkmId: number) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/teams/${teamId}/pokemons/${pkmId}`,
+        `${BackURL}/api/teams/${teamId}/pokemons/${pkmId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -51,7 +50,7 @@ function TeamModal({ teamModalData, setTeamModalData }: TeamModalProps) {
   const patchTeamName = async (newName: string, teamId: number) => {
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/teams/${teamId}`,
+        `${BackURL}/api/teams/${teamId}`,
         {
           name: newName,
         },
@@ -92,14 +91,11 @@ function TeamModal({ teamModalData, setTeamModalData }: TeamModalProps) {
   const deleteTeam = async (teamId: number) => {
     console.log('joue');
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/teams/${teamId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.delete(`${BackURL}/api/teams/${teamId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response);
 
       const updatedTeams = teams.filter((team) => {

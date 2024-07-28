@@ -10,4 +10,5 @@ export interface IContext {
   expiredTokenProtocol: () => JSX.Element;
   selectedTypesId: number[];
   setSelectedTypesId: React.Dispatch<React.SetStateAction<number[]>>;
+  BackURL: String;
 }

@@ -33,7 +33,7 @@ INSERT INTO "user" ("username", "password", "email") VALUES
     'Test_User',
     'T3ster',
     'test@mail.fr'
-),;
+);
 
 INSERT INTO "type"
   ("name", "color")
@@ -458,9 +458,9 @@ VALUES
   (87, 3),
   (34, 3),
   (28, 3),
-  (1, 6),
-  (4, 6),
-  (7, 6)
+  (1, 4),
+  (4, 4),
+  (7, 4)
 ;
 
 COMMIT;

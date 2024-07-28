@@ -17,6 +17,8 @@ import { ITeam } from '../../@types/team';
 import * as bulmaToast from 'bulma-toast';
 // import './App.css';
 
+const BackURL = 'http://localhost:3000';
+
 function App() {
   // STATE pour le pseudo
   const [pseudo, setPseudo] = useState<null | string>(null);
@@ -74,9 +76,10 @@ function App() {
   useEffect(() => {
     const fetchAndSaveTypes = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/types');
+        const response = await axios.get(`${BackURL}/api/types`);
 
         setTypes(response.data);
+        console.log(types);
       } catch (error) {
         console.log(error);
       }
@@ -84,7 +87,7 @@ function App() {
 
     const fetchAndSavePkms = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/pokemons');
+        const response = await axios.get(`${BackURL}/api/pokemons`);
 
         setPkms(response.data);
       } catch (error) {
@@ -102,7 +105,7 @@ function App() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/teams', {
+        const response = await axios.get(`${BackURL}/api/teams`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -150,6 +153,7 @@ function App() {
           expiredTokenProtocol,
           selectedTypesId,
           setSelectedTypesId,
+          BackURL,
         }}
       >
         <Header

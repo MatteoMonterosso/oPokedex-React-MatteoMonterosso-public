@@ -9,7 +9,7 @@ import axios, { AxiosError } from 'axios';
 function Teams() {
   // const [teams, setTeams] = useState<ITeam[]>([]);
 
-  const { teams, expiredTokenProtocol, token, setTeams } = useContext(
+  const { teams, expiredTokenProtocol, token, setTeams, BackURL } = useContext(
     Context
   ) as IContext;
 
@@ -35,7 +35,7 @@ function Teams() {
   const createNewTeam = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/teams`,
+        `${BackURL}/api/teams`,
         {},
         {
           headers: {

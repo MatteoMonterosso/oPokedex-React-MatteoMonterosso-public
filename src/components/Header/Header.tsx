@@ -1,11 +1,13 @@
 import axios from 'axios';
 import * as bulmaToast from 'bulma-toast';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
   removeTokenAndPseudoFromLocalStorage,
   setTokenAndPseudoToLocalStorage,
 } from '../../localStorage/localStorage';
+import Context from '../../context/context';
+import { IContext } from '../../@types/context';
 
 interface HeaderProps {
   pseudo: string | null;
@@ -16,9 +18,10 @@ interface HeaderProps {
 // { pseudo, setPseudo, setToken }: HeaderProps
 
 function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
+  const { BackURL } = useContext(Context) as IContext;
   const checkCredentials = async (email: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/login', {
+      const response = await axios.post(`${BackURL}/api/login`, {
         email: email,
         password: password,
       });

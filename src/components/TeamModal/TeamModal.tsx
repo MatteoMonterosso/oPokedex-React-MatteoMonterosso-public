@@ -4,6 +4,7 @@ import Context from '../../context/context';
 import { IPokemon } from '../../@types/pokemon';
 import axios, { AxiosError } from 'axios';
 import { IContext } from '../../@types/context';
+import instance from '../../axiosSetup/axiosSetup';
 
 interface TeamModalProps {
   teamModalData: ITeam;
@@ -18,21 +19,27 @@ function TeamModal({ teamModalData, setTeamModalData }: TeamModalProps) {
 
   const deletePkmFromTable = async (teamId: number, pkmId: number) => {
     try {
-      const response = await axios.delete(
-        `${BackURL}/api/teams/${teamId}/pokemons/${pkmId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const response = await instance.delete(
+        `/teams/${teamId}/pokemons/${pkmId}`
+        // ,{
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
       console.log(response);
 
       const updatedTeam = response.data;
 
       const updatedTeams = teams.map((team) => {
-        return updatedTeam.id === team.id && updatedTeam;
+        if (updatedTeam.id === team.id) {
+          return updatedTeam;
+        } else {
+          return team;
+        }
       });
+
+      console.log(updatedTeams);
 
       setTeams(updatedTeams);
       setTeamModalData(response.data);
@@ -49,16 +56,16 @@ function TeamModal({ teamModalData, setTeamModalData }: TeamModalProps) {
 
   const patchTeamName = async (newName: string, teamId: number) => {
     try {
-      const response = await axios.patch(
-        `${BackURL}/api/teams/${teamId}`,
+      const response = await instance.patch(
+        `/teams/${teamId}`,
         {
           name: newName,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         }
+        // ,{
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
       console.log(response);
 
@@ -91,11 +98,15 @@ function TeamModal({ teamModalData, setTeamModalData }: TeamModalProps) {
   const deleteTeam = async (teamId: number) => {
     console.log('joue');
     try {
-      const response = await axios.delete(`${BackURL}/api/teams/${teamId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await instance.delete(
+        `/teams/${teamId}`
+        // ,
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
+      );
       console.log(response);
 
       const updatedTeams = teams.filter((team) => {

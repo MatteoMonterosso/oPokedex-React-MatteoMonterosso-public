@@ -1,4 +1,3 @@
-import axios from 'axios';
 import * as bulmaToast from 'bulma-toast';
 import { ReactNode, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -8,23 +7,22 @@ import {
 } from '../../localStorage/localStorage';
 import Context from '../../context/context';
 import { IContext } from '../../@types/context';
+import instance from '../../axiosSetup/axiosSetup';
 
 interface HeaderProps {
   pseudo: string | null;
   setPseudo: React.Dispatch<React.SetStateAction<string | null>>;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
-  // fetchTeams: () => Promise<void>;
 }
-// { pseudo, setPseudo, setToken }: HeaderProps
 
 function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
-  const { BackURL, setTeams } = useContext(Context) as IContext;
+  const { setTeams } = useContext(Context) as IContext;
 
   const [burgerButton, setBurgerButton] = useState(false);
 
   const checkCredentials = async (email: string, password: string) => {
     try {
-      const response = await axios.post(`${BackURL}/api/login`, {
+      const response = await instance.post(`/login`, {
         email: email,
         password: password,
       });
@@ -34,6 +32,8 @@ function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
       // si on reçoit une 200 on enregistre le pseudo reçu dans le state
       setPseudo(response.data.pseudo);
       setToken(response.data.token);
+      instance.defaults.headers.common['Authorization'] =
+        `Bearer ${response.data.token}`;
 
       // on enregistre le token et le pseudo dans le localStorage
       setTokenAndPseudoToLocalStorage(
@@ -126,6 +126,7 @@ function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
                     // on est deconnecté si le peudo est null
                     setPseudo(null);
                     setToken(null);
+                    instance.defaults.headers.common['Authorization'] = null;
 
                     // on vide le localStorage
                     removeTokenAndPseudoFromLocalStorage();

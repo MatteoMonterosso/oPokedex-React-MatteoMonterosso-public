@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import Header from '../Header/Header';
 import Types from '../Types/Types';
 import { IType } from '../../@types/type';
@@ -15,9 +15,7 @@ import {
 import Context from '../../context/context';
 import { ITeam } from '../../@types/team';
 import * as bulmaToast from 'bulma-toast';
-// import './App.css';
-
-const BackURL = 'https://back-opokedex-react-matteomonterosso.onrender.com';
+import instance from '../../axiosSetup/axiosSetup';
 
 function App() {
   // STATE pour le pseudo
@@ -76,7 +74,7 @@ function App() {
   useEffect(() => {
     const fetchAndSaveTypes = async () => {
       try {
-        const response = await axios.get(`${BackURL}/api/types`);
+        const response = await instance.get(`/types`);
 
         setTypes(response.data);
         console.log(types);
@@ -87,7 +85,7 @@ function App() {
 
     const fetchAndSavePkms = async () => {
       try {
-        const response = await axios.get(`${BackURL}/api/pokemons`);
+        const response = await instance.get(`/pokemons`);
 
         setPkms(response.data);
         setIsLoading(false);
@@ -106,11 +104,7 @@ function App() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get(`${BackURL}/api/teams`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await instance.get(`/teams`);
         setTeams(response.data);
       } catch (error) {
         console.log(error);
@@ -153,15 +147,9 @@ function App() {
           expiredTokenProtocol,
           selectedTypesId,
           setSelectedTypesId,
-          BackURL,
         }}
       >
-        <Header
-          pseudo={pseudo}
-          setPseudo={setPseudo}
-          setToken={setToken}
-          // fetchTeams={fetchTeams}
-        />
+        <Header pseudo={pseudo} setPseudo={setPseudo} setToken={setToken} />
         {isLoading ? (
           <>
             <p className="has-text-centered">

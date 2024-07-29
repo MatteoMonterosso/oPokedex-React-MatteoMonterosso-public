@@ -3,8 +3,9 @@ import { IPokemon } from '../../@types/pokemon';
 import { IContext } from '../../@types/context';
 import * as bulmaToast from 'bulma-toast';
 import Context from '../../context/context';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { ITeam } from '../../@types/team';
+import instance from '../../axiosSetup/axiosSetup';
 
 interface PokemonModalProps {
   pkmModalData: IPokemon;
@@ -12,20 +13,21 @@ interface PokemonModalProps {
 }
 
 function PokemonModal({ pkmModalData, setPkmModalData }: PokemonModalProps) {
-  const { pkms, teams, setTeams, token, expiredTokenProtocol, BackURL } =
-    useContext(Context) as IContext;
+  const { pkms, teams, setTeams, token, expiredTokenProtocol } = useContext(
+    Context
+  ) as IContext;
 
   const addPkmToTeam = async (teamId: number, pkmId: number) => {
     try {
       console.log(token);
-      const response = await axios.put(
-        `${BackURL}/api/teams/${teamId}/pokemons/${pkmId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const response = await instance.put(
+        `/teams/${teamId}/pokemons/${pkmId}`,
+        {}
+        // ,{
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
 
       console.log(response);
@@ -33,8 +35,14 @@ function PokemonModal({ pkmModalData, setPkmModalData }: PokemonModalProps) {
       const updatedTeam = response.data;
 
       const updatedTeams = teams.map((team) => {
-        return updatedTeam.id === team.id && updatedTeam;
+        if (updatedTeam.id === team.id) {
+          return updatedTeam;
+        } else {
+          return team;
+        }
       });
+
+      console.log(updatedTeams);
 
       setTeams(updatedTeams);
 

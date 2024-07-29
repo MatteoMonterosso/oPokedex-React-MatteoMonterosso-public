@@ -4,12 +4,13 @@ import { ITeam } from '../../@types/team';
 import TeamModal from '../TeamModal/TeamModal';
 import Context from '../../context/context';
 import { IContext } from '../../@types/context';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
+import instance from '../../axiosSetup/axiosSetup';
 
 function Teams() {
   // const [teams, setTeams] = useState<ITeam[]>([]);
 
-  const { teams, expiredTokenProtocol, token, setTeams, BackURL } = useContext(
+  const { teams, expiredTokenProtocol, setTeams } = useContext(
     Context
   ) as IContext;
 
@@ -34,15 +35,7 @@ function Teams() {
 
   const createNewTeam = async () => {
     try {
-      const response = await axios.post(
-        `${BackURL}/api/teams`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await instance.post(`/teams`, {});
       console.log(response);
       const newTeam = response.data;
       newTeam.pokemons = [];

@@ -165,7 +165,7 @@ function App() {
         {isLoading ? (
           <>
             <p className="has-text-centered">
-              Le premier chargement peut prendre quelques intant ...
+              Le premier chargement peut prendre quelques intants ...
             </p>
             <progress className="mt-6 progress is-small is-primary" max="100">
               15%

@@ -18,6 +18,7 @@ export async function getAllTeams(req, res) {
   if (!teams) {
     return res.status(404).json('Pas de team en bdd');
   }
+  console.log('User Teams fetched');
   res.status(200).json(teams);
 }
 
@@ -115,6 +116,7 @@ export async function removePkmFromTeam(req, res) {
     });
 
     console.log(updatedteam);
+    console.log(`Pokemon ${pokemon.name} removed from team ${team.name}`);
     res.status(200).json(updatedteam);
   } catch (error) {
     console.error('Error removing Pokemon from team:', error);
@@ -142,6 +144,7 @@ export async function patchTeam(req, res) {
     });
 
     // Renvoyer la tâche créée au format JSON
+    console.log(`${team.name} team renamed to team ${patchedTeam.name}`);
     res.json(patchedTeam);
   } catch (error) {
     console.error('Error patching team:', error);
@@ -158,6 +161,7 @@ export async function createTeam(req, res) {
       userId: userId,
     });
 
+    console.log('New Team created');
     res.json(createdTeam);
   } catch (error) {
     console.error('Error creating team:', error);
@@ -183,6 +187,7 @@ export async function deleteTeam(req, res) {
     await team.destroy({ transaction });
 
     await transaction.commit();
+    console.log(`${team.name} deleted`);
     res.json({ message: 'Team deleted successfully' });
   } catch (error) {
     await transaction.rollback();

@@ -90,6 +90,7 @@ function App() {
         const response = await axios.get(`${BackURL}/api/pokemons`);
 
         setPkms(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -122,7 +123,6 @@ function App() {
       }
     };
     token && fetchTeams();
-    setIsLoading(false);
   }, [token]);
 
   const [pkmModalData, setPkmModalData] = useState<null | IPokemon>(null);
@@ -163,9 +163,14 @@ function App() {
           // fetchTeams={fetchTeams}
         />
         {isLoading ? (
-          <progress className="progress is-small is-primary" max="100">
-            15%
-          </progress>
+          <>
+            <p className="has-text-centered">
+              Le premier chargement peut prendre quelques intant ...
+            </p>
+            <progress className="mt-6 progress is-small is-primary" max="100">
+              15%
+            </progress>
+          </>
         ) : (
           <Routes>
             <Route

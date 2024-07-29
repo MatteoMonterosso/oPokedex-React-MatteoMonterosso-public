@@ -196,7 +196,9 @@ function PokemonModal({ pkmModalData, setPkmModalData }: PokemonModalProps) {
               </div>
             </form>
           ) : (
-            <p>Log in to add this Pokemon to your Teams</p>
+            <p className="has-text-danger">
+              Log in to add this Pokemon to your Teams
+            </p>
           )}
         </footer>
       </div>

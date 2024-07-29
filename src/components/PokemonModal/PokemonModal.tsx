@@ -154,46 +154,50 @@ function PokemonModal({ pkmModalData, setPkmModalData }: PokemonModalProps) {
           </div>
         </section>
         <footer className="modal-card-foot">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
+          {token ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
 
-              const form = e.currentTarget;
-              const formData = new FormData(form);
-              const targetedTeam = parseInt(
-                formData.get('team-to-edit') as string
-              ) as number;
-              const pkmIdToAdd = pkmModalData.id as number;
+                const form = e.currentTarget;
+                const formData = new FormData(form);
+                const targetedTeam = parseInt(
+                  formData.get('team-to-edit') as string
+                ) as number;
+                const pkmIdToAdd = pkmModalData.id as number;
 
-              console.log(targetedTeam);
-              console.log(pkmIdToAdd);
+                console.log(targetedTeam);
+                console.log(pkmIdToAdd);
 
-              addPkmToTeam(targetedTeam, pkmIdToAdd);
-            }}
-            action=""
-          >
-            <div className="field has-addons">
-              <div className="control is-expanded">
-                <div className="select is-fullwidth">
-                  <select name="team-to-edit">
-                    <option value="">Select a team</option>;
-                    {teams.map((team) => {
-                      return (
-                        <option key={team.id} value={team.id}>
-                          {team.name}
-                        </option>
-                      );
-                    })}
-                  </select>
+                addPkmToTeam(targetedTeam, pkmIdToAdd);
+              }}
+              action=""
+            >
+              <div className="field has-addons">
+                <div className="control is-expanded">
+                  <div className="select is-fullwidth">
+                    <select name="team-to-edit">
+                      <option value="">Select a team</option>;
+                      {teams.map((team) => {
+                        return (
+                          <option key={team.id} value={team.id}>
+                            {team.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+                <div className="control">
+                  <button type="submit" className="button is-primary">
+                    Choose
+                  </button>
                 </div>
               </div>
-              <div className="control">
-                <button type="submit" className="button is-primary">
-                  Choose
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          ) : (
+            <p>Log in to add this Pokemon to your Teams</p>
+          )}
         </footer>
       </div>
     </div>

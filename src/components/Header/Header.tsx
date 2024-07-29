@@ -18,7 +18,7 @@ interface HeaderProps {
 // { pseudo, setPseudo, setToken }: HeaderProps
 
 function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
-  const { BackURL } = useContext(Context) as IContext;
+  const { BackURL, setTeams } = useContext(Context) as IContext;
 
   const [burgerButton, setBurgerButton] = useState(false);
 
@@ -129,6 +129,8 @@ function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
 
                     // on vide le localStorage
                     removeTokenAndPseudoFromLocalStorage();
+
+                    setTeams([]);
                   }}
                   className="button is-danger"
                 >

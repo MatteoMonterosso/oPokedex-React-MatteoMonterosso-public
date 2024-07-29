@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { ITeam } from '../../@types/team';
 import Context from '../../context/context';
 import { IPokemon } from '../../@types/pokemon';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { IContext } from '../../@types/context';
 import instance from '../../axiosSetup/axiosSetup';
 
@@ -12,8 +12,9 @@ interface TeamModalProps {
 }
 
 function TeamModal({ teamModalData, setTeamModalData }: TeamModalProps) {
-  const { pkms, teams, setTeams, expiredTokenProtocol, token, BackURL } =
-    useContext(Context) as IContext;
+  const { pkms, teams, setTeams, expiredTokenProtocol } = useContext(
+    Context
+  ) as IContext;
 
   const [inputValue, setInputValue] = useState('');
 
@@ -21,11 +22,6 @@ function TeamModal({ teamModalData, setTeamModalData }: TeamModalProps) {
     try {
       const response = await instance.delete(
         `/teams/${teamId}/pokemons/${pkmId}`
-        // ,{
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
       );
       console.log(response);
 

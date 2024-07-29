@@ -14,6 +14,6 @@ Les details de chaque Pokemon peuvent etre affichés en cliquant dessus.
 
 Un système d'authentification est en place.
 
-Un utilisateur connecté peut accéder à ses equipes de pokémons personnelles et les administrer (Creer, renommer ou supprimer une equipe ; y ajouter ou supprimer des pokemons).
+Un utilisateur connecté peut accéder à ses equipes de pokémons personnelles et les administrer (Creer, consulter, renommer ou supprimer une equipe ; y ajouter ou supprimer des pokemons).
 
 Vous vouvez tester la connexion avec l'identifiant de test suivant : (email: test@mail.fr ; password: T3ster)

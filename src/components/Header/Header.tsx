@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as bulmaToast from 'bulma-toast';
-import { ReactNode, useContext } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   removeTokenAndPseudoFromLocalStorage,
@@ -19,6 +19,9 @@ interface HeaderProps {
 
 function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
   const { BackURL } = useContext(Context) as IContext;
+
+  const [burgerButton, setBurgerButton] = useState(false);
+
   const checkCredentials = async (email: string, password: string) => {
     try {
       const response = await axios.post(`${BackURL}/api/login`, {
@@ -79,8 +82,11 @@ function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
           </h1>
 
           <a
+            onClick={() => {
+              setBurgerButton(!burgerButton);
+            }}
             role="button"
-            className="navbar-burger "
+            className={`navbar-burger ${burgerButton && 'is-active'}`}
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
@@ -92,7 +98,10 @@ function Header({ pseudo, setPseudo, setToken }: HeaderProps) {
           </a>
         </div>
 
-        <div id="navbarBasicExample" className="navbar-menu">
+        <div
+          id="navbarBasicExample"
+          className={`navbar-menu ${burgerButton && 'is-active'}`}
+        >
           <div className="navbar-start">
             <Link to="/" className="navbar-item">
               Pokemons
